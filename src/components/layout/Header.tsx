@@ -12,23 +12,33 @@ import { Button } from "@/components/ui/Button";
 function NavLinks({
   onNavigate,
   pathname,
+  mobile = false,
 }: {
   onNavigate?: () => void;
   pathname: string;
+  mobile?: boolean;
 }) {
   return (
-    <ul className="flex flex-col gap-1 md:flex-row md:items-center md:gap-1 lg:flex-nowrap lg:gap-1.5">
+    <ul
+      className={
+        mobile
+          ? "flex flex-col gap-1"
+          : "flex flex-col gap-1 md:flex-row md:items-center md:gap-1 lg:flex-nowrap lg:gap-1.5"
+      }
+    >
       {mainNav.map((item) => {
         const active =
           item.href === "/"
             ? pathname === "/"
             : pathname === item.href || pathname.startsWith(`${item.href}/`);
         return (
-          <li key={item.href} className="lg:shrink-0">
+          <li key={item.href} className={mobile ? "" : "lg:shrink-0"}>
             <Link
               href={item.href}
               onClick={onNavigate}
-              className={`block rounded-[var(--radius)] px-3 py-2 text-sm font-medium transition-colors md:inline-block lg:px-2.5 xl:px-3 ${
+              className={`block rounded-[var(--radius)] px-3 py-2 text-sm font-medium transition-colors ${
+                mobile ? "px-4 py-3 text-base" : "md:inline-block lg:px-2.5 xl:px-3"
+              } ${
                 active
                   ? "bg-[var(--primary)]/10 text-[var(--primary)]"
                   : "text-[var(--foreground)] hover:bg-[var(--muted-bg)]/60"
@@ -83,13 +93,13 @@ function MobileNav({ pathname }: { pathname: string }) {
           />
           <div
             id="mobile-menu"
-            className="fixed inset-0 z-50 flex flex-col bg-[var(--surface)] p-4 shadow-[var(--shadow)]"
+            className="fixed inset-0 z-50 flex h-dvh flex-col bg-[var(--surface)] shadow-[var(--shadow)]"
             role="dialog"
             aria-modal="true"
             aria-label="Navigazione mobile"
           >
-            <div className="mb-4 flex items-center justify-between border-b border-[var(--border)] pb-3">
-              <span className="font-[family-name:var(--font-heading)] text-base font-semibold text-[var(--foreground)]">
+            <div className="flex items-center justify-between border-b border-[var(--border)] px-5 pb-3 pt-[max(1rem,env(safe-area-inset-top))]">
+              <span className="font-[family-name:var(--font-heading)] text-2xl font-semibold text-[var(--foreground)]">
                 Menu
               </span>
               <button
@@ -101,20 +111,27 @@ function MobileNav({ pathname }: { pathname: string }) {
                 <X className="h-5 w-5" />
               </button>
             </div>
-            <nav aria-label="Principale mobile" className="rounded-[var(--radius)] bg-[var(--surface)]">
-              <NavLinks pathname={pathname} onNavigate={() => setOpen(false)} />
-            </nav>
-            <div className="mt-6 flex flex-col gap-3 border-t border-[var(--border)] pt-4">
+            <div className="flex-1 overflow-y-auto px-5 py-5">
+              <nav
+                aria-label="Principale mobile"
+                className="rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface)] p-2"
+              >
+                <NavLinks pathname={pathname} mobile onNavigate={() => setOpen(false)} />
+              </nav>
+            </div>
+            <div className="border-t border-[var(--border)] bg-[var(--surface)] px-5 pb-[max(1rem,env(safe-area-inset-bottom))] pt-4">
               <a
                 href={`tel:${siteConfig.phone.replace(/\s/g, "")}`}
                 className="inline-flex items-center gap-2 text-sm font-medium text-[var(--primary)]"
               >
                 <Phone className="h-4 w-4" />
-                Chiama ora
+                {siteConfig.phoneDisplay}
               </a>
-              <Button href="/prenota" variant="primary" className="w-full justify-center">
-                Prenota appuntamento
-              </Button>
+              <div className="mt-3">
+                <Button href="/prenota" variant="primary" className="w-full justify-center" onClick={() => setOpen(false)}>
+                  Prenota appuntamento
+                </Button>
+              </div>
             </div>
           </div>
         </>

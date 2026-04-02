@@ -17,18 +17,18 @@ function NavLinks({
   pathname: string;
 }) {
   return (
-    <ul className="flex flex-col gap-1 md:flex-row md:items-center md:gap-1">
+    <ul className="flex flex-col gap-1 md:flex-row md:items-center md:gap-1 lg:flex-nowrap lg:gap-1.5">
       {mainNav.map((item) => {
         const active =
           item.href === "/"
             ? pathname === "/"
             : pathname === item.href || pathname.startsWith(`${item.href}/`);
         return (
-          <li key={item.href}>
+          <li key={item.href} className="lg:shrink-0">
             <Link
               href={item.href}
               onClick={onNavigate}
-              className={`block rounded-[var(--radius)] px-3 py-2 text-sm font-medium transition-colors md:inline-block ${
+              className={`block rounded-[var(--radius)] px-3 py-2 text-sm font-medium transition-colors md:inline-block lg:px-2.5 xl:px-3 ${
                 active
                   ? "bg-[var(--primary)]/10 text-[var(--primary)]"
                   : "text-[var(--foreground)] hover:bg-[var(--muted-bg)]/60"
@@ -126,8 +126,8 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-[var(--border)] bg-[var(--surface)]/95 backdrop-blur-md supports-[backdrop-filter]:bg-[var(--surface)]/90">
-      <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
-        <Link href="/" className="flex min-w-0 items-center gap-3">
+      <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-3 px-4 py-3 sm:px-6 lg:gap-6 lg:px-8">
+        <Link href="/" className="flex min-w-0 shrink-0 items-center gap-3 lg:max-w-[16rem] xl:max-w-none">
           <span className="relative h-10 w-10 overflow-hidden rounded-full ring-2 ring-[var(--primary)]/20">
             <Image
               src="/image4.jpg"
@@ -142,19 +142,19 @@ export function Header() {
           </span>
         </Link>
 
-        <nav className="hidden md:block" aria-label="Principale">
+        <nav className="hidden lg:flex lg:min-w-0 lg:flex-1 lg:justify-center" aria-label="Principale">
           <NavLinks pathname={pathname} />
         </nav>
 
-        <div className="hidden items-center gap-3 md:flex">
+        <div className="hidden shrink-0 items-center gap-3 md:flex">
           <a
             href={`tel:${siteConfig.phone.replace(/\s/g, "")}`}
-            className="inline-flex items-center gap-1.5 text-sm font-medium text-[var(--primary)] hover:underline"
+            className="hidden items-center gap-1.5 text-sm font-medium text-[var(--primary)] hover:underline xl:inline-flex"
           >
             <Phone className="h-4 w-4 shrink-0" aria-hidden />
             {siteConfig.phoneDisplay}
           </a>
-          <Button href="/prenota" variant="primary">
+          <Button href="/prenota" variant="primary" className="whitespace-nowrap">
             Prenota appuntamento
           </Button>
         </div>

@@ -77,19 +77,21 @@ function MobileNav({ pathname }: { pathname: string }) {
         <>
           <button
             type="button"
-            className="fixed inset-0 z-40 bg-black/30"
+            className="fixed inset-0 z-40 bg-black/45"
             aria-label="Chiudi menu"
             onClick={() => setOpen(false)}
           />
           <div
             id="mobile-menu"
-            className="fixed inset-y-0 right-0 z-50 w-[min(100%,20rem)] border-l border-[var(--border)] bg-white p-4 shadow-[var(--shadow)]"
+            className="fixed inset-0 z-50 flex flex-col bg-[var(--surface)] p-4 shadow-[var(--shadow)]"
             role="dialog"
             aria-modal="true"
             aria-label="Navigazione mobile"
-            style={{ backgroundColor: "var(--surface)" }}
           >
-            <div className="mb-4 flex justify-end">
+            <div className="mb-4 flex items-center justify-between border-b border-[var(--border)] pb-3">
+              <span className="font-[family-name:var(--font-heading)] text-base font-semibold text-[var(--foreground)]">
+                Menu
+              </span>
               <button
                 type="button"
                 className="rounded-[var(--radius)] p-2.5 hover:bg-[var(--muted-bg)]"
@@ -99,7 +101,7 @@ function MobileNav({ pathname }: { pathname: string }) {
                 <X className="h-5 w-5" />
               </button>
             </div>
-            <nav aria-label="Principale mobile">
+            <nav aria-label="Principale mobile" className="rounded-[var(--radius)] bg-[var(--surface)]">
               <NavLinks pathname={pathname} onNavigate={() => setOpen(false)} />
             </nav>
             <div className="mt-6 flex flex-col gap-3 border-t border-[var(--border)] pt-4">

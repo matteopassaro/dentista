@@ -19,7 +19,7 @@ export function CTASection({ title, description }: CTASectionProps) {
         <Button
           href="/prenota"
           variant="outline"
-          className="border-white text-[var(--primary-foreground)] hover:bg-white/10"
+          className="w-full justify-center border-white text-[var(--primary-foreground)] hover:bg-white/10 md:w-auto"
         >
           Prenota appuntamento
         </Button>

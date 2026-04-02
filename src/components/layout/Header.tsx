@@ -64,7 +64,7 @@ function MobileNav({ pathname }: { pathname: string }) {
     <div className="md:hidden">
       <button
         type="button"
-        className="rounded-[var(--radius)] p-2 text-[var(--foreground)] hover:bg-[var(--muted-bg)]/70"
+        className="rounded-[var(--radius)] p-2.5 text-[var(--foreground)] hover:bg-[var(--muted-bg)]"
         aria-expanded={open}
         aria-controls="mobile-menu"
         onClick={() => setOpen((v) => !v)}
@@ -83,15 +83,16 @@ function MobileNav({ pathname }: { pathname: string }) {
           />
           <div
             id="mobile-menu"
-            className="fixed inset-y-0 right-0 z-50 w-[min(100%,20rem)] border-l border-[var(--border)] bg-[var(--surface)] p-4 shadow-[var(--shadow)]"
+            className="fixed inset-y-0 right-0 z-50 w-[min(100%,20rem)] border-l border-[var(--border)] bg-white p-4 shadow-[var(--shadow)]"
             role="dialog"
             aria-modal="true"
             aria-label="Navigazione mobile"
+            style={{ backgroundColor: "var(--surface)" }}
           >
             <div className="mb-4 flex justify-end">
               <button
                 type="button"
-                className="rounded-[var(--radius)] p-2 hover:bg-[var(--muted-bg)]"
+                className="rounded-[var(--radius)] p-2.5 hover:bg-[var(--muted-bg)]"
                 onClick={() => setOpen(false)}
               >
                 <span className="sr-only">Chiudi</span>
@@ -124,9 +125,9 @@ export function Header() {
   const pathname = usePathname();
 
   return (
-    <header className="sticky top-0 z-50 border-b border-[var(--border)]/80 bg-[var(--surface)]/95 backdrop-blur-md">
+    <header className="sticky top-0 z-50 border-b border-[var(--border)] bg-[var(--surface)]/95 backdrop-blur-md supports-[backdrop-filter]:bg-[var(--surface)]/90">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
-        <Link href="/" className="flex items-center gap-3">
+        <Link href="/" className="flex min-w-0 items-center gap-3">
           <span className="relative h-10 w-10 overflow-hidden rounded-full ring-2 ring-[var(--primary)]/20">
             <Image
               src="/image4.jpg"
@@ -134,10 +135,9 @@ export function Header() {
               width={40}
               height={40}
               className="object-cover"
-              loading="eager"
             />
           </span>
-          <span className="font-[family-name:var(--font-heading)] text-lg font-semibold leading-tight text-[var(--foreground)]">
+          <span className="truncate font-[family-name:var(--font-heading)] text-base font-semibold leading-tight text-[var(--foreground)] sm:text-lg">
             {siteConfig.name}
           </span>
         </Link>

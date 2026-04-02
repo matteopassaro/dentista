@@ -66,6 +66,9 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  overflow-wrap: anywhere;
 }
 
 :focus-visible {
@@ -75,6 +78,12 @@ body {
 
 .post-body {
   max-width: none;
+}
+
+img,
+video {
+  max-width: 100%;
+  height: auto;
 }
 
 .post-body h2 {

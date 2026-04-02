@@ -17,11 +17,11 @@ export function Hero() {
           Odontoiatria integrata a Bari: prevenzione, implantologia, ortodonzia ed estetica con
           tecnologie digitali e un team che ti ascolta davvero.
         </p>
-        <div className="mt-8 flex flex-wrap gap-3">
-          <Button href="/prenota" variant="primary">
+        <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <Button href="/prenota" variant="primary" className="w-full justify-center sm:w-auto">
             Prenota appuntamento
           </Button>
-          <Button href="/servizi" variant="outline">
+          <Button href="/servizi" variant="outline" className="w-full justify-center sm:w-auto">
             Scopri i servizi
           </Button>
         </div>

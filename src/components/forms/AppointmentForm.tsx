@@ -21,6 +21,7 @@ export function AppointmentForm() {
     formState: { errors, isSubmitting },
   } = useForm<AppointmentInput>({
     resolver: zodResolver(appointmentSchema),
+    shouldFocusError: true,
     defaultValues: {
       name: "",
       phone: "",
@@ -65,17 +66,19 @@ export function AppointmentForm() {
       noValidate
     >
       <div>
-        <h2 className="font-[family-name:var(--font-heading)] text-xl font-semibold text-[var(--foreground)]">
-          Richiedi un appuntamento
+        <h2 className="text-balance font-[family-name:var(--font-heading)] text-xl font-semibold text-[var(--foreground)]">
+          Richiedi il tuo consulto in pochi secondi
         </h2>
         <p className="mt-1 text-sm text-[var(--muted)]">
-          Compila il modulo: il nostro front-office ti richiamerà con disponibilità aggiornate.
+          Lascia i tuoi recapiti e il motivo della visita: ti ricontattiamo in orario di studio
+          per proporti la disponibilita’ piu’ adatta.
         </p>
       </div>
 
       {serverMessage ? (
         <p
-          role="alert"
+          role={serverMessage.type === "success" ? "status" : "alert"}
+          aria-live="polite"
           className={`rounded-[var(--radius)] px-3 py-2 text-sm ${
             serverMessage.type === "success"
               ? "bg-[var(--success)]/15 text-[var(--success)]"
@@ -86,24 +89,35 @@ export function AppointmentForm() {
         </p>
       ) : null}
 
-      <Input label="Nome e cognome" autoComplete="name" {...register("name")} error={errors.name?.message} />
+      <Input
+        label="Nome e cognome"
+        autoComplete="name"
+        placeholder="Come preferisci essere richiamato…"
+        {...register("name")}
+        error={errors.name?.message}
+      />
       <Input
         label="Telefono"
         type="tel"
         autoComplete="tel"
+        inputMode="tel"
+        placeholder="Es. 333 123 4567…"
         {...register("phone")}
         error={errors.phone?.message}
       />
       <Input
-        label="Email"
+        label="Email (facoltativa)"
         type="email"
         autoComplete="email"
+        inputMode="email"
+        spellCheck={false}
+        placeholder="Se preferisci ricevere conferma anche via email…"
         {...register("email")}
         error={errors.email?.message}
       />
       <Textarea
-        label="Messaggio"
-        placeholder="Orari preferiti, motivo della visita…"
+        label="Come possiamo aiutarti?"
+        placeholder="Motivo della visita, fastidio o orari preferiti…"
         {...register("message")}
         error={errors.message?.message}
       />
@@ -114,8 +128,11 @@ export function AppointmentForm() {
         className="w-full justify-center sm:w-auto"
         disabled={isSubmitting}
       >
-        {isSubmitting ? "Invio in corso…" : "Prenota appuntamento"}
+        {isSubmitting ? "Invio in corso…" : "Richiedi un consulto"}
       </Button>
+      <p className="text-xs leading-relaxed text-[var(--muted)]">
+        Inviando il modulo autorizzi il contatto per gestire la tua richiesta di visita.
+      </p>
     </form>
   );
 }

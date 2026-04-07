@@ -21,10 +21,17 @@ const fraunces = Fraunces({
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: `${siteConfig.name} · Odontoiatria a Bari`,
-    template: `%s · ${siteConfig.name}`,
+    default: `${siteConfig.name} | Dentista a Bari`,
+    template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
+  keywords: [
+    "dentista a Bari",
+    "studio dentistico a Bari",
+    "visita dentistica Bari",
+    "implantologia Bari",
+    siteConfig.name,
+  ],
   openGraph: {
     ...defaultOpenGraph(),
     title: siteConfig.name,
@@ -44,14 +51,18 @@ export const metadata: Metadata = {
 };
 
 function localBusinessJsonLd() {
+  const sameAs = Object.values(siteConfig.social).filter(Boolean);
   return {
     "@context": "https://schema.org",
     "@type": "Dentist",
     name: siteConfig.name,
+    legalName: siteConfig.legalName,
     description: siteConfig.description,
     url: siteConfig.url,
-    telephone: siteConfig.phone,
-    email: siteConfig.email,
+    ...(siteConfig.phone ? { telephone: siteConfig.phone } : {}),
+    ...(siteConfig.email ? { email: siteConfig.email } : {}),
+    hasMap: siteConfig.mapAppUrl,
+    areaServed: "Bari",
     address: {
       "@type": "PostalAddress",
       streetAddress: siteConfig.address.street,
@@ -65,16 +76,17 @@ function localBusinessJsonLd() {
         "@type": "OpeningHoursSpecification",
         dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
         opens: "09:00",
-        closes: "19:30",
+        closes: "13:00",
       },
       {
         "@type": "OpeningHoursSpecification",
-        dayOfWeek: "Saturday",
-        opens: "09:00",
-        closes: "13:30",
+        dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+        opens: "15:30",
+        closes: "19:30",
       },
     ],
     priceRange: "€€",
+    ...(sameAs.length ? { sameAs } : {}),
   };
 }
 
@@ -84,14 +96,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="it" className={`${dmSans.variable} ${fraunces.variable} h-full scroll-smooth`}>
+    <html
+      lang="it"
+      data-scroll-behavior="smooth"
+      className={`${dmSans.variable} ${fraunces.variable} h-full scroll-smooth`}
+    >
       <head>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd()) }}
         />
       </head>
-      <body className="flex min-h-full flex-col antialiased">{children}</body>
+      <body className="flex min-h-full flex-col overflow-x-hidden antialiased">{children}</body>
     </html>
   );
 }

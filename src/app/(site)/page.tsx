@@ -5,11 +5,11 @@ import { TestimonialsHome } from "@/components/home/TestimonialsHome";
 import { CTASection } from "@/components/sections/CTASection";
 import { ContactPreview } from "@/components/sections/ContactPreview";
 import { pageMetadata } from "@/lib/seo";
-import { siteConfig } from "@/lib/site";
 
 export const metadata = pageMetadata({
-  title: siteConfig.name,
-  description: siteConfig.description,
+  title: "Dentista a Bari",
+  description:
+    "Ferlan Studio Dentistico e' lo studio dentistico a Bari per chi cerca visite chiare, prevenzione e trattamenti su misura con attenzione al comfort.",
   path: "/",
 });
 
@@ -21,8 +21,8 @@ export default function HomePage() {
       <AboutTeaser />
       <TestimonialsHome />
       <CTASection
-        title="Pronto a prenotare la tua prima visita?"
-        description="Prenota online o chiamaci: ricevi proposta oraria rapida e piano di trattamento chiaro."
+        title="Prenota la tua visita e ricevi indicazioni chiare fin dal primo contatto"
+        description="Richiedi un consulto in pochi minuti: ti aiutiamo a trovare il trattamento piu’ adatto e l’orario migliore per te."
       />
       <ContactPreview />
     </>

@@ -1,3 +1,5 @@
+import { useId } from "react";
+
 type StarRowProps = {
   rating: number;
   max?: number;
@@ -8,7 +10,7 @@ type StarRowProps = {
 
 export function StarRow({ rating, max = 5, size = "md", decorative = false }: StarRowProps) {
   const dim = size === "sm" ? "h-4 w-4" : "h-5 w-5";
-  const labelId = `stars-${rating}-${max}`.replace(/\./g, "");
+  const labelId = useId();
   return (
     <div
       className="flex gap-0.5 text-amber-500"

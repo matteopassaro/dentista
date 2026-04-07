@@ -16,7 +16,7 @@ export function Section({
   as: Tag = "section",
 }: SectionProps) {
   return (
-    <Tag id={id} className={`py-12 sm:py-16 md:py-20 ${className}`.trim()}>
+    <Tag id={id} className={`py-14 sm:py-16 md:py-20 ${className}`.trim()}>
       <div className={`mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 ${containerClassName}`.trim()}>
         {children}
       </div>

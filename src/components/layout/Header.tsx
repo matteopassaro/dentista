@@ -4,9 +4,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Menu, Phone, X } from "lucide-react";
+import { MapPin, Menu, Phone, X } from "lucide-react";
 import { mainNav } from "@/lib/nav";
-import { siteConfig } from "@/lib/site";
+import { mapsHref, phoneHref, siteConfig } from "@/lib/site";
 import { Button } from "@/components/ui/Button";
 
 function NavLinks({
@@ -56,6 +56,8 @@ function NavLinks({
 
 function MobileNav({ pathname }: { pathname: string }) {
   const [open, setOpen] = useState(false);
+  const phoneLink = phoneHref();
+  const mapsLink = mapsHref();
 
   useEffect(() => {
     if (!open) return;
@@ -120,18 +122,37 @@ function MobileNav({ pathname }: { pathname: string }) {
               </nav>
             </div>
             <div className="border-t border-[var(--border)] bg-[var(--surface)] px-5 pb-[max(1rem,env(safe-area-inset-bottom))] pt-4">
-              <a
-                href={`tel:${siteConfig.phone.replace(/\s/g, "")}`}
-                className="inline-flex items-center gap-2 text-sm font-medium text-[var(--primary)]"
-              >
-                <Phone className="h-4 w-4" />
-                {siteConfig.phoneDisplay}
-              </a>
-              <div className="mt-3">
-                <Button href="/prenota" variant="primary" className="w-full justify-center" onClick={() => setOpen(false)}>
-                  Prenota appuntamento
+              <p className="text-sm font-medium text-[var(--foreground)]">{siteConfig.address.street}</p>
+              <p className="mt-1 text-xs text-[var(--muted)]">{siteConfig.openingHours[0]?.hours}</p>
+              <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                <Button
+                  href="/prenota"
+                  variant="primary"
+                  className="w-full justify-center"
+                  onClick={() => setOpen(false)}
+                >
+                  Prenota la tua visita
+                </Button>
+                <Button
+                  href={mapsLink}
+                  variant="outline"
+                  className="w-full justify-center"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => setOpen(false)}
+                >
+                  Apri le indicazioni
                 </Button>
               </div>
+              {phoneLink ? (
+                <a
+                  href={phoneLink}
+                  className="mt-3 inline-flex items-center gap-2 text-sm font-medium text-[var(--primary)]"
+                >
+                  <Phone className="h-4 w-4" aria-hidden />
+                  Chiama ora {siteConfig.phoneDisplay}
+                </a>
+              ) : null}
             </div>
           </div>
         </>
@@ -142,6 +163,8 @@ function MobileNav({ pathname }: { pathname: string }) {
 
 export function Header() {
   const pathname = usePathname();
+  const phoneLink = phoneHref();
+  const mapsLink = mapsHref();
 
   return (
     <header className="sticky top-0 z-50 border-b border-[var(--border)] bg-[var(--surface)]/95 backdrop-blur-md supports-[backdrop-filter]:bg-[var(--surface)]/90">
@@ -149,11 +172,11 @@ export function Header() {
         <Link href="/" className="flex min-w-0 shrink-0 items-center gap-3 lg:max-w-[16rem] xl:max-w-none">
           <span className="relative h-10 w-10 overflow-hidden rounded-full ring-2 ring-[var(--primary)]/20">
             <Image
-              src="/image4.jpg"
+              src="/ferlan-logo.jpg"
               alt=""
               width={40}
               height={40}
-              className="object-cover"
+              className="h-auto w-full object-cover"
             />
           </span>
           <span className="truncate font-[family-name:var(--font-heading)] text-base font-semibold leading-tight text-[var(--foreground)] sm:text-lg">
@@ -166,15 +189,27 @@ export function Header() {
         </nav>
 
         <div className="hidden shrink-0 items-center gap-3 md:flex">
-          <a
-            href={`tel:${siteConfig.phone.replace(/\s/g, "")}`}
-            className="hidden items-center gap-1.5 text-sm font-medium text-[var(--primary)] hover:underline xl:inline-flex"
-          >
-            <Phone className="h-4 w-4 shrink-0" aria-hidden />
-            {siteConfig.phoneDisplay}
-          </a>
+          {phoneLink ? (
+            <a
+              href={phoneLink}
+              className="hidden items-center gap-1.5 text-sm font-medium text-[var(--primary)] hover:underline xl:inline-flex"
+            >
+              <Phone className="h-4 w-4 shrink-0" aria-hidden />
+              Chiama ora
+            </a>
+          ) : (
+            <a
+              href={mapsLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden items-center gap-1.5 text-sm font-medium text-[var(--primary)] hover:underline xl:inline-flex"
+            >
+              <MapPin className="h-4 w-4 shrink-0" aria-hidden />
+              Viale della Repubblica, 58/E
+            </a>
+          )}
           <Button href="/prenota" variant="primary" className="whitespace-nowrap">
-            Prenota appuntamento
+            Prenota la tua visita
           </Button>
         </div>
 

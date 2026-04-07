@@ -23,13 +23,13 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
         id={inputId}
         aria-invalid={Boolean(error)}
         aria-describedby={error ? errId : undefined}
-        className={`rounded-[var(--radius)] border bg-[var(--surface)] px-3 py-2.5 text-[var(--foreground)] shadow-sm transition-colors placeholder:text-[var(--muted)] focus:border-[var(--primary)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)]/25 ${
+        className={`min-h-[50px] touch-manipulation rounded-[var(--radius)] border bg-[var(--surface)] px-4 py-3 text-base text-[var(--foreground)] shadow-sm transition-[border-color,box-shadow] duration-200 placeholder:text-[var(--muted)] focus:border-[var(--primary)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)]/25 sm:text-[15px] ${
           error ? "border-[var(--danger)]" : "border-[var(--border)]"
         } ${className}`.trim()}
         {...props}
       />
       {error ? (
-        <p id={errId} className="text-sm text-[var(--danger)]" role="alert">
+        <p id={errId} className="text-sm text-[var(--danger)]" role="alert" aria-live="polite">
           {error}
         </p>
       ) : null}

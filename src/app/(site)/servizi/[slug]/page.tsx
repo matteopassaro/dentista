@@ -6,7 +6,7 @@ import { Section } from "@/components/ui/Section";
 import { Card } from "@/components/ui/Card";
 import { getServiceDetail, getServiceSlugs } from "@/lib/services";
 import { pageMetadata } from "@/lib/seo";
-import { siteConfig } from "@/lib/site";
+import { mapsHref, siteConfig } from "@/lib/site";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -29,6 +29,7 @@ export default async function ServizioDetailPage({ params }: Props) {
   const { slug } = await params;
   const s = getServiceDetail(slug);
   if (!s) notFound();
+  const mapsLink = mapsHref();
 
   const Icon = s.icon;
 
@@ -58,14 +59,17 @@ export default async function ServizioDetailPage({ params }: Props) {
               <Icon className="h-7 w-7" aria-hidden />
             </span>
             <div>
-              <h1 className="font-[family-name:var(--font-heading)] text-3xl font-bold text-[var(--foreground)] sm:text-4xl">
-                {s.title}
+              <h1 className="text-balance font-[family-name:var(--font-heading)] text-3xl font-bold text-[var(--foreground)] sm:text-4xl">
+                {s.title} a Bari con un percorso chiaro e su misura
               </h1>
-              <p className="mt-2 max-w-2xl text-[var(--muted)]">{s.shortDescription}</p>
+              <p className="mt-2 max-w-2xl text-[var(--muted)]">
+                {s.shortDescription} Ti spieghiamo sempre indicazioni, benefici e passaggi del
+                trattamento in modo semplice.
+              </p>
             </div>
           </div>
           <Button href="/prenota" variant="primary" className="shrink-0 self-start md:self-center">
-            Prenota appuntamento
+            Prenota la tua visita
           </Button>
         </div>
       </Section>
@@ -75,19 +79,19 @@ export default async function ServizioDetailPage({ params }: Props) {
           <div className="lg:col-span-2 space-y-8">
             <Card elevated={false} className="border border-[var(--border)]">
               <h2 className="font-[family-name:var(--font-heading)] text-xl font-semibold text-[var(--foreground)]">
-                In sintesi
+                Cosa puoi ottenere con questo trattamento
               </h2>
               <p className="mt-3 text-[var(--muted)] leading-relaxed">{s.description}</p>
             </Card>
             <Card elevated={false} className="border border-[var(--border)]">
               <h2 className="font-[family-name:var(--font-heading)] text-xl font-semibold text-[var(--foreground)]">
-                Quando è indicato
+                Quando puo’ aiutarti davvero
               </h2>
               <p className="mt-3 text-[var(--muted)] leading-relaxed">{s.whenNeeded}</p>
             </Card>
             <Card elevated={false} className="border border-[var(--border)]">
               <h2 className="font-[family-name:var(--font-heading)] text-xl font-semibold text-[var(--foreground)]">
-                Vantaggi
+                I vantaggi per te
               </h2>
               <ul className="mt-3 list-inside list-disc space-y-2 text-[var(--muted)]">
                 {s.benefits.map((b) => (
@@ -97,7 +101,7 @@ export default async function ServizioDetailPage({ params }: Props) {
             </Card>
             <Card elevated={false} className="border border-[var(--border)]">
               <h2 className="font-[family-name:var(--font-heading)] text-xl font-semibold text-[var(--foreground)]">
-                Come lavoriamo
+                Come si svolge il percorso
               </h2>
               <ol className="mt-4 space-y-3">
                 {s.processSteps.map((step, i) => (
@@ -112,18 +116,37 @@ export default async function ServizioDetailPage({ params }: Props) {
             </Card>
           </div>
           <aside className="space-y-6 lg:sticky lg:top-28 lg:self-start">
-            <Card className="border border-[var(--border)] bg-[var(--primary-dark)] text-[var(--primary-foreground)]">
-              <p className="text-sm font-semibold">Hai dubbi su questo servizio?</p>
-              <p className="mt-2 text-sm text-white/90">
-                Prenota una consulenza con {siteConfig.name}: valuteremo insieme indicazioni e tempistiche.
+            <Card className="border border-[var(--primary)]/15 bg-[var(--surface)] shadow-[var(--shadow)]">
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--primary)]">
+                Consulenza
               </p>
-              <Button
-                href="/prenota"
-                variant="outline"
-                className="mt-4 w-full justify-center border-white text-[var(--primary-foreground)] hover:bg-white/10"
-              >
-                Richiedi visita
-              </Button>
+              <h2 className="mt-3 text-balance font-[family-name:var(--font-heading)] text-xl font-semibold text-[var(--foreground)]">
+                Hai dubbi su questo trattamento?
+              </h2>
+              <p className="mt-3 text-sm leading-relaxed text-[var(--muted)]">
+                Prenota una consulenza con {siteConfig.name}: valuteremo insieme indicazioni,
+                tempi e trattamento piu’ adatto al tuo caso.
+              </p>
+              <p className="mt-3 text-xs font-medium text-[var(--foreground)]">
+                Risposta rapida durante gli orari di studio.
+              </p>
+              <div className="mt-4">
+                <Button
+                  href="/prenota"
+                  variant="primary"
+                  className="w-full justify-center"
+                >
+                  Prenota la tua visita
+                </Button>
+                <a
+                  href={mapsLink}
+                  className="mt-3 inline-flex text-sm font-medium text-[var(--primary)] underline-offset-4 hover:underline"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Apri le indicazioni
+                </a>
+              </div>
             </Card>
           </aside>
         </div>
@@ -131,7 +154,7 @@ export default async function ServizioDetailPage({ params }: Props) {
 
       <Section>
         <h2 className="font-[family-name:var(--font-heading)] text-2xl font-bold text-[var(--foreground)]">
-          Domande frequenti
+          Dubbi frequenti prima della visita
         </h2>
         <p className="mt-2 text-[var(--muted)]">Risposte orientative — non sostituiscono la visita clinica.</p>
         <div className="mt-8 max-w-3xl">

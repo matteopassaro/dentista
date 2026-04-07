@@ -2,19 +2,19 @@ import Link from "next/link";
 import type { ComponentProps, ReactNode } from "react";
 
 const baseClass =
-  "inline-flex items-center justify-center gap-2 rounded-[var(--radius)] font-semibold transition-transform duration-200 hover:-translate-y-0.5 active:translate-y-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--ring)] disabled:pointer-events-none disabled:opacity-50";
+  "inline-flex min-h-[48px] touch-manipulation items-center justify-center gap-2 rounded-[var(--radius)] px-5 py-3 text-sm font-semibold transition-[background-color,border-color,color,box-shadow,transform] duration-200 ease-out hover:-translate-y-0.5 active:translate-y-0 motion-reduce:transform-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--ring)] disabled:pointer-events-none disabled:opacity-50";
 
 const variants: Record<
   "primary" | "outline" | "ghost" | "whatsapp",
   string
 > = {
   primary:
-    "bg-[var(--primary)] text-[var(--primary-foreground)] px-5 py-2.5 shadow-[var(--shadow)] hover:bg-[var(--primary-dark)]",
+    "bg-[var(--primary)] text-[var(--primary-foreground)] shadow-[var(--shadow)] hover:bg-[var(--primary-dark)] hover:shadow-lg",
   outline:
-    "border-2 border-[var(--primary)] text-[var(--primary)] bg-transparent px-5 py-2.5 hover:bg-[var(--primary)]/10",
-  ghost: "text-[var(--primary)] px-3 py-2 hover:bg-[var(--primary)]/10",
+    "border-2 border-[var(--primary)] bg-transparent text-[var(--primary)] hover:bg-[var(--primary)]/10",
+  ghost: "bg-transparent px-4 py-2.5 text-[var(--primary)] hover:bg-[var(--primary)]/10",
   whatsapp:
-    "bg-[#25D366] text-white px-5 py-2.5 shadow-[var(--shadow)] hover:brightness-95",
+    "bg-[#25D366] text-white shadow-[var(--shadow)] hover:brightness-95 hover:shadow-lg",
 };
 
 type ButtonOwnProps = {
@@ -29,14 +29,27 @@ export type ButtonProps = ButtonOwnProps &
     | (ComponentProps<"button"> & { href?: undefined })
   );
 
+function isExternalHref(href: string) {
+  return /^(https?:|mailto:|tel:)/.test(href);
+}
+
 export function Button(props: ButtonProps) {
   const { variant = "primary", className = "", children, ...rest } = props;
   const cls = `${baseClass} ${variants[variant]} ${className}`.trim();
 
   if ("href" in rest && rest.href) {
     const { href, ...linkRest } = rest;
+    if (isExternalHref(href)) {
+      const anchorProps = linkRest as Omit<ComponentProps<"a">, "href">;
+      return (
+        <a href={href} className={cls} {...anchorProps}>
+          {children}
+        </a>
+      );
+    }
+    const nextLinkProps = linkRest as Omit<ComponentProps<typeof Link>, "href">;
     return (
-      <Link href={href} className={cls} {...linkRest}>
+      <Link href={href} className={cls} {...nextLinkProps}>
         {children}
       </Link>
     );

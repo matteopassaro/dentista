@@ -12,7 +12,14 @@ export const appointmentSchema = z.object({
     .min(8, "Inserisci un numero di telefono valido.")
     .max(32, "Numero di telefono non valido.")
     .regex(/^[\d\s+().-]+$/, "Il telefono può contenere solo cifre e simboli comuni."),
-  email: z.string().trim().email("Inserisci un indirizzo email valido."),
+  email: z
+    .string()
+    .trim()
+    .max(160, "L'indirizzo email e' troppo lungo.")
+    .refine(
+      (value) => value === "" || z.string().email().safeParse(value).success,
+      "Inserisci un indirizzo email valido.",
+    ),
   message: z
     .string()
     .trim()

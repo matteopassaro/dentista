@@ -7,6 +7,11 @@ import { pageMetadata } from "@/lib/seo";
 import { siteConfig } from "@/lib/site";
 
 type Props = { params: Promise<{ slug: string }> };
+const blogPostDateFormatter = new Intl.DateTimeFormat("it-IT", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
 
 export async function generateStaticParams() {
   return getAllPostSlugs().map((slug) => ({ slug }));
@@ -63,11 +68,7 @@ export default async function BlogPostPage({ params }: Props) {
           </nav>
           <header className="mx-auto mt-6 max-w-3xl text-center">
             <p className="text-sm font-medium text-[var(--primary)]">
-              {new Date(post.date).toLocaleDateString("it-IT", {
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-              })}{" "}
+              {blogPostDateFormatter.format(new Date(post.date))}{" "}
               · {post.author}
             </p>
             <h1 className="mt-3 font-[family-name:var(--font-heading)] text-3xl font-bold text-[var(--foreground)] sm:text-4xl">
@@ -84,7 +85,7 @@ export default async function BlogPostPage({ params }: Props) {
           <div className="mx-auto mt-12 max-w-3xl rounded-[var(--radius)] border border-[var(--border)] bg-[var(--background)] p-6 text-center">
             <p className="font-medium text-[var(--foreground)]">Vuoi approfondire con una visita?</p>
             <Button href="/prenota" variant="primary" className="mt-4">
-              Prenota appuntamento
+              Prenota la tua visita
             </Button>
           </div>
         </Section>

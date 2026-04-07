@@ -3,31 +3,31 @@ import type { Testimonial } from "@/types";
 export const testimonials: Testimonial[] = [
   {
     quote:
-      "Equipe attenta, spiegazioni chiare e ambiente sereno. Mi hanno seguita nell'implantologia con tempi rispettati.",
-    author: "Giulia R.",
-    role: "Paziente a Bari da 3 anni",
+      "Chiarezza nelle spiegazioni, ambiente ordinato e attenzione nel mettere a proprio agio anche chi arriva con un po' di ansia.",
+    author: "Tema ricorrente",
+    role: "Prima visita e controlli",
     rating: 5,
   },
   {
     quote:
-      "Ortodonzia invisibile impeccabile: visite puntuali e risultato naturale. Consigliatissimi.",
-    author: "Marco T.",
-    role: "Professionista · Bari",
+      "Professionalita', delicatezza durante le cure e puntualita' sono tra gli aspetti piu' citati nelle recensioni pubbliche.",
+    author: "Tema ricorrente",
+    role: "Igiene e trattamenti conservativi",
     rating: 5,
   },
   {
     quote:
-      "Finalmente uno studio dove igiene e conservativa sono integrate e ogni passaggio viene spiegato chiaramente.",
-    author: "Elena S.",
-    role: "Mamma di due bambini · Bari",
+      "Molti pazienti apprezzano la sensazione di essere ascoltati e la chiarezza nel capire tempi, costi e alternative.",
+    author: "Tema ricorrente",
+    role: "Piani di cura personalizzati",
     rating: 5,
   },
   {
     quote:
-      "Ho fatto sbiancamento e una corona: tempi rapidi, zero dolore e un sorriso luminoso.",
-    author: "Davide M.",
-    role: "Paziente · Bari",
-    rating: 4,
+      "Le recensioni pubbliche sottolineano spesso un approccio umano, professionale e orientato al comfort del paziente.",
+    author: "Tema ricorrente",
+    role: "Esperienza in studio",
+    rating: 5,
   },
 ];
 
